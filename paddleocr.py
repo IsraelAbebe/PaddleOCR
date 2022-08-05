@@ -478,7 +478,9 @@ class PaddleOCR(predict_system.TextSystem):
             img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
         if det and rec:
             dt_boxes, rec_res = self.__call__(img, cls)
-            return [[box.tolist(), res] for box, res in zip(dt_boxes, rec_res)]
+
+            return [(box.tolist(), res[0], res[1]) for box, res in zip(dt_boxes, rec_res)]
+            # return [[box.tolist(), res] for box, res in zip(dt_boxes, rec_res)]
         elif det and not rec:
             dt_boxes, elapse = self.text_detector(img)
             if dt_boxes is None:
